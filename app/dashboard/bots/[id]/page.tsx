@@ -68,6 +68,17 @@ export default async function BotDetailPage({
             {bot.system_prompt}
           </p>
         </section>
+        
+        {/* Embed snippet */}
+        <section className="bg-white border border-gray-200 rounded-2xl p-6">
+          <h2 className="font-semibold text-gray-900 mb-1">Embed on your site</h2>
+          <p className="text-sm text-gray-500 mb-4">
+            Paste this snippet into the HTML of any page you want the chat to appear on.
+          </p>
+          <pre className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-xs text-gray-800 overflow-x-auto">
+            {`<script src="${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/widget.js" data-bot-id="${bot.id}"></script>`}
+          </pre>
+        </section>
 
         {/* Add content */}
         <section className="bg-white border border-gray-200 rounded-2xl p-6">
