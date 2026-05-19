@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Chatfolio Widget Demo</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; max-width: 720px; margin: 60px auto; padding: 0 24px; color: #1f2937; line-height: 1.6; }
+    h1 { margin-bottom: 8px; }
+    .meta { color: #6b7280; margin-bottom: 32px; }
+    code { background: #f3f4f6; padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
+    pre { background: #f3f4f6; padding: 16px; border-radius: 8px; overflow-x: auto; }
+  </style>
+</head>
+<body>
+  <h1>Chatfolio Widget Demo</h1>
+  <p class="meta">Pretend this is a customer's portfolio website. The chat bubble in the bottom-right is the embedded widget.</p>
+
+  <p>This page is a plain HTML file. The only "integration" is one script tag:</p>
+  <pre>&lt;script src="/widget.js" data-bot-id="YOUR_BOT_ID"&gt;&lt;/script&gt;</pre>
+
+  <p>Click the chat bubble at the bottom right to test.</p>
+
+  <!-- IMPORTANT: replace YOUR_BOT_ID with a real bot UUID from your dashboard -->
+  <script src="/widget.js" data-bot-id="REPLACE_WITH_YOUR_BOT_ID"></script>
+</body>
+</html>
