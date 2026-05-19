@@ -110,7 +110,7 @@ export default function EmbedChat({
               <div
                 className={`max-w-[85%] rounded-2xl px-3 py-2 text-sm ${
                   msg.role === "user"
-                    ? "bg-blue-600 text-white"
+                    ? "bg-emerald-600 text-white"
                     : "bg-gray-100 text-gray-900"
                 }`}
               >
@@ -135,12 +135,12 @@ export default function EmbedChat({
             placeholder="Type a message..."
             rows={1}
             disabled={isLoading}
-            className="flex-1 resize-none rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+            className="flex-1 resize-none rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 disabled:bg-gray-100"
           />
           <button
             onClick={sendMessage}
             disabled={isLoading || !input.trim()}
-            className="rounded-lg bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:bg-gray-300"
+            className="rounded-lg bg-emerald-600 px-3 py-2 text-sm font-medium text-white hover:bg-emerald-700 disabled:bg-gray-300"
           >
             Send
           </button>
