@@ -40,7 +40,7 @@
     "  width: 56px;",
     "  height: 56px;",
     "  border-radius: 50%;",
-    "  background: #2563eb;",
+    "  background: #059669;",
     "  color: white;",
     "  border: none;",
     "  cursor: pointer;",
