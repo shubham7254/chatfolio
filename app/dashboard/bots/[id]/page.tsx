@@ -1,6 +1,8 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect, notFound } from "next/navigation";
 import Link from "next/link";
+import ContentForm from "./content-form";
+import ClearContentButton from "./clear-content-button";
 
 export default async function BotDetailPage({
   params,
@@ -22,6 +24,16 @@ export default async function BotDetailPage({
     .single();
 
   if (!bot) notFound();
+
+  // Fetch document chunks for preview
+  const { data: documents, count } = await supabase
+    .from("documents")
+    .select("id, content", { count: "exact" })
+    .eq("bot_id", id)
+    .order("id", { ascending: false })
+    .limit(20);
+
+  const totalChunks = count ?? 0;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -48,20 +60,57 @@ export default async function BotDetailPage({
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-6 py-10">
-        <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-6">
+      <main className="max-w-4xl mx-auto px-6 py-10 space-y-6">
+        {/* System prompt */}
+        <section className="bg-white border border-gray-200 rounded-2xl p-6">
           <h2 className="font-semibold text-gray-900 mb-2">System prompt</h2>
           <p className="text-sm text-gray-600 whitespace-pre-wrap">
             {bot.system_prompt}
           </p>
-        </div>
+        </section>
 
-        <div className="bg-white border border-gray-200 rounded-2xl p-10 text-center">
-          <p className="text-gray-500 mb-2">No content yet.</p>
-          <p className="text-sm text-gray-400">
-            Content ingestion coming in the next feature.
+        {/* Add content */}
+        <section className="bg-white border border-gray-200 rounded-2xl p-6">
+          <h2 className="font-semibold text-gray-900 mb-1">Add content</h2>
+          <p className="text-sm text-gray-500 mb-4">
+            Paste any text you want this bot to know about. It will be chunked
+            and embedded automatically.
           </p>
-        </div>
+          <ContentForm botId={bot.id} />
+        </section>
+
+        {/* Existing content */}
+        <section className="bg-white border border-gray-200 rounded-2xl p-6">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h2 className="font-semibold text-gray-900">Indexed content</h2>
+              <p className="text-sm text-gray-500 mt-1">
+                {totalChunks === 0
+                  ? "No content yet."
+                  : `${totalChunks} chunk${totalChunks === 1 ? "" : "s"} indexed${totalChunks > 20 ? " (showing latest 20)" : ""}`}
+              </p>
+            </div>
+            {totalChunks > 0 && <ClearContentButton botId={bot.id} />}
+          </div>
+
+          {totalChunks === 0 ? (
+            <div className="text-center py-8 text-sm text-gray-400">
+              Add some content above to get started.
+            </div>
+          ) : (
+            <ul className="space-y-2">
+              {documents!.map((doc) => (
+                <li
+                  key={doc.id}
+                  className="border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-700"
+                >
+                  {doc.content.slice(0, 150)}
+                  {doc.content.length > 150 ? "…" : ""}
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
       </main>
     </div>
   );
